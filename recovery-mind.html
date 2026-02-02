@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recovery Mind Program</title>
+    <style>
+        :root {
+            --color-primary: #2563eb;
+            --color-primary-hover: #1d4ed8;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-danger: #ef4444;
+            --color-bg: #f8fafc;
+            --color-surface: #ffffff;
+            --color-text: #1e293b;
+            --color-text-secondary: #64748b;
+            --color-border: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            background: var(--color-surface);
+            border: 2px solid var(--color-border);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            white-space: nowrap;
+            color: var(--color-text);
+        }
+
+        .tab-btn:hover {
+            border-color: var(--color-primary);
+            background: #eff6ff;
+        }
+
+        .tab-btn.active {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .card {
+            background: var(--color-surface);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border: 1px solid var(--color-border);
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--color-primary);
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: var(--color-text);
+        }
+
+        .lesson-list {
+            list-style: none;
+        }
+
+        .lesson-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f8fafc;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-left: 4px solid var(--color-primary);
+        }
+
+        .lesson-item:hover {
+            background: #eff6ff;
+            transform: translateX(5px);
+        }
+
+        .lesson-number {
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-right: 10px;
+        }
+
+        .quiz-question {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+
+        .quiz-options {
+            margin-top: 15px;
+        }
+
+        .quiz-option {
+            display: block;
+            padding: 12px;
+            margin: 8px 0;
+            background: white;
+            border: 2px solid var(--color-border);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--color-primary);
+            background: #eff6ff;
+        }
+
+        .quiz-option input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--color-primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-secondary {
+            background: #64748b;
+        }
+
+        .btn-secondary:hover {
+            background: #475569;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .result.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 2px solid var(--color-success);
+        }
+
+        .result.warning {
+            background: #fef3c7;
+            color: #92400e;
+            border: 2px solid var(--color-warning);
+        }
+
+        .journal-entry {
+            width: 100%;
+            min-height: 150px;
+            padding: 15px;
+            border: 2px solid var(--color-border);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            margin: 15px 0;
+            resize: vertical;
+        }
+
+        .journal-entry:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        .progress-tracker {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e2e8f0;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-success), #34d399);
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .thinking-pattern {
+            padding: 15px;
+            margin: 10px 0;
+            background: #fef3c7;
+            border-left: 4px solid var(--color-warning);
+            border-radius: 6px;
+        }
+
+        .thinking-pattern strong {
+            color: #92400e;
+        }
+
+        .recovery-tool {
+            padding: 20px;
+            margin: 15px 0;
+            background: #d1fae5;
+            border-left: 4px solid var(--color-success);
+            border-radius: 6px;
+        }
+
+        .recovery-tool h4 {
+            color: #065f46;
+            margin-bottom: 10px;
+        }
+
+        .saved-entries {
+            margin-top: 20px;
+        }
+
+        .entry-item {
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--color-primary);
+        }
+
+        .entry-date {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .checkpoint {
+            padding: 20px;
+            margin: 15px 0;
+            background: #e0e7ff;
+            border-radius: 8px;
+            border-left: 4px solid var(--color-primary);
+        }
+
+        .checkpoint h4 {
+            color: var(--color-primary);
+            margin-bottom: 10px;
+        }
+
+        ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .tab-btn {
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
+
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧠 Recovery Mind Program</h1>
+            <p class="subtitle">Understanding the Addicted Brain &amp; Breaking Free from Criminal Thinking</p>
+        </header>
+
+        <div class="progress-tracker card">
+            <h3>Your Progress</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar" style="width: 0%">0%</div>
+            </div>
+            <p id="progressText">Get started by exploring the lessons below</p>
+        </div>
+
+        <nav class="nav-tabs">
+            <button class="tab-btn active" onclick="showTab('lessons')">Lessons</button>
+            <button class="tab-btn" onclick="showTab('quiz')">Self-Assessment</button>
+            <button class="tab-btn" onclick="showTab('journal')">Reflection Journal</button>
+            <button class="tab-btn" onclick="showTab('tools')">Recovery Tools</button>
+            <button class="tab-btn" onclick="showTab('thinking')">Criminal Thinking</button>
+        </nav>
+
+        <div id="lessons" class="content-section active">
+            <div class="card">
+                <h2>Understanding The Addicted Brain</h2>
+                <p>Based on "The Addictive Brain" by Dr. Thad A. Polk (The Great Courses). These lessons explain the neuroscience of addiction and how substances change your brain.</p>
+
+                <ul class="lesson-list">
+                    <li class="lesson-item" onclick="showLesson(1)">
+                        <span class="lesson-number">Lesson 1:</span>
+                        What Is Addiction?
+                    </li>
+                    <li class="lesson-item" onclick="showLesson(2)">
+                        <span class="lesson-number">Lesson 2:</span>
+                        The Pleasure System &amp; Dopamine
+                    </li>
+                    <li class="lesson-item" onclick="showLesson(3)">
+                        <span class="lesson-number">Lesson 3:</span>
+                        How Drugs Hijack Your Brain
+                    </li>
+                    <li class="lesson-item" onclick="showLesson(4)">
+                        <span class="lesson-number">Lesson 4:</span>
+                        Tolerance &amp; Withdrawal
+                    </li>
+                    <li class="lesson-item" onclick="showLesson(5)">
+                        <span class="lesson-number">Lesson 5:</span>
+                        The Prefrontal Cortex &amp; Decision Making
+                    </li>
+                    <li class="lesson-item" onclick="showLesson(6)">
+                        <span class="lesson-number">Lesson 6:</span>
+                        Breaking the Cycle of Addiction
+                    </li>
+                </ul>
+
+                <div id="lessonContent" style="margin-top: 30px; display: none;">
+                    <div class="card" style="background: #eff6ff;">
+                        <h3 id="lessonTitle"></h3>
+                        <div id="lessonText"></div>
+                        <button class="btn" onclick="markLessonComplete()" style="margin-top: 20px;">Mark as Complete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="quiz" class="content-section">
+            <div class="card">
+                <h2>Self-Assessment: Understanding Your Addiction</h2>
+                <p>Answer these questions honestly to better understand your relationship with substances and identify areas for growth.</p>
+
+                <div class="quiz-question">
+                    <strong>1. When did you first realize your substance use was becoming a problem?</strong>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q1" value="a">
+                            When it started affecting my relationships
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q1" value="b">
+                            When I got arrested or in legal trouble
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q1" value="c">
+                            When I couldn't stop even when I wanted to
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q1" value="d">
+                            I still don't think it's a problem
+                        </label>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <strong>2. What triggers your cravings most strongly?</strong>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q2" value="a">
+                            Stress and difficult emotions
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q2" value="b">
+                            Being around certain people or places
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q2" value="c">
+                            Boredom or having nothing to do
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q2" value="d">
+                            Physical withdrawal symptoms
+                        </label>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <strong>3. How has addiction affected your decision-making?</strong>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q3" value="a">
+                            I made choices I never thought I would make
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q3" value="b">
+                            I hurt people I care about
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q3" value="c">
+                            I committed crimes to support my habit
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q3" value="d">
+                            All of the above
+                        </label>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <strong>4. What gives you hope for recovery?</strong>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q4" value="a">
+                            My family and loved ones
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q4" value="b">
+                            Wanting to be a better person
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q4" value="c">
+                            Understanding my brain can heal
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q4" value="d">
+                            I'm not sure I have hope yet
+                        </label>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="submitQuiz()">Submit Assessment</button>
+                <div id="quizResult"></div>
+            </div>
+        </div>
+
+        <div id="journal" class="content-section">
+            <div class="card">
+                <h2>Reflection Journal</h2>
+                <p>Use this space to reflect on your journey, track your thoughts, and identify patterns in your thinking.</p>
+
+                <h3>Today's Reflection</h3>
+                <textarea class="journal-entry" id="journalText" placeholder="Write about your feelings, triggers, victories, or struggles today..."></textarea>
+
+                <h3>Reflection Prompts:</h3>
+                <ul>
+                    <li>What triggered a craving today, and how did I respond?</li>
+                    <li>What criminal thinking patterns did I notice in myself?</li>
+                    <li>What am I grateful for in my recovery journey?</li>
+                    <li>What healthy coping skill did I use today?</li>
+                    <li>What progress have I made since beginning this program?</li>
+                </ul>
+
+                <button class="btn" onclick="saveJournalEntry()">Save Entry</button>
+
+                <div class="saved-entries" id="savedEntries">
+                    <h3 style="margin-top: 30px;">Past Reflections</h3>
+                    <p style="color: var(--color-text-secondary);">Your saved journal entries will appear here.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="tools" class="content-section">
+            <div class="card">
+                <h2>Recovery Tools &amp; Coping Strategies</h2>
+                <p>Practical tools to help you manage cravings, handle stress, and build a healthy life.</p>
+
+                <div class="recovery-tool">
+                    <h4>🛑 HALT Check-In</h4>
+                    <p>Before making any major decision or when feeling triggered, ask yourself:</p>
+                    <ul>
+                        <li><strong>H</strong> - Am I Hungry?</li>
+                        <li><strong>A</strong> - Am I Angry?</li>
+                        <li><strong>L</strong> - Am I Lonely?</li>
+                        <li><strong>T</strong> - Am I Tired?</li>
+                    </ul>
+                    <p>These states make you vulnerable to poor decisions. Address the need first.</p>
+                </div>
+
+                <div class="recovery-tool">
+                    <h4>🧘 Grounding Exercise (5-4-3-2-1)</h4>
+                    <p>When cravings hit or anxiety rises, use your senses:</p>
+                    <ul>
+                        <li><strong>5 things</strong> you can see</li>
+                        <li><strong>4 things</strong> you can touch</li>
+                        <li><strong>3 things</strong> you can hear</li>
+                        <li><strong>2 things</strong> you can smell</li>
+                        <li><strong>1 thing</strong> you can taste</li>
+                    </ul>
+                    <p>This brings you back to the present moment and out of your head.</p>
+                </div>
+
+                <div class="recovery-tool">
+                    <h4>💭 Thought Stopping Technique</h4>
+                    <p>When obsessive thoughts about using appear:</p>
+                    <ol>
+                        <li>Recognize the thought immediately</li>
+                        <li>Say "STOP" firmly (out loud or in your mind)</li>
+                        <li>Replace it with a positive affirmation: "I am choosing recovery" or "This feeling will pass"</li>
+                        <li>Engage in a distracting activity immediately (exercise, reading, talking)</li>
+                    </ol>
+                </div>
+
+                <div class="recovery-tool">
+                    <h4>📝 Decision Matrix</h4>
+                    <p>Before making risky choices, write out:</p>
+                    <ul>
+                        <li><strong>Short-term consequences</strong> of using vs. not using</li>
+                        <li><strong>Long-term consequences</strong> of using vs. not using</li>
+                        <li><strong>Who will be affected</strong> by my choice</li>
+                        <li><strong>What my future self</strong> would want me to do</li>
+                    </ul>
+                </div>
+
+                <div class="recovery-tool">
+                    <h4>🎯 Goal Setting Framework</h4>
+                    <p><strong>Set SMART goals for recovery:</strong></p>
+                    <ul>
+                        <li><strong>S</strong>pecific - Clear and well-defined</li>
+                        <li><strong>M</strong>easurable - Track your progress</li>
+                        <li><strong>A</strong>chievable - Realistic given your situation</li>
+                        <li><strong>R</strong>elevant - Matters to your recovery</li>
+                        <li><strong>T</strong>ime-bound - Has a deadline</li>
+                    </ul>
+                    <p><em>Example: "I will complete all 6 lessons in this program within 2 weeks and journal 3 times per week."</em></p>
+                </div>
+            </div>
+        </div>
+
+        <div id="thinking" class="content-section">
+            <div class="card">
+                <h2>Understanding Criminal Thinking Patterns</h2>
+                <p>Addiction often goes hand-in-hand with distorted thinking patterns that led to criminal behavior. Recognizing these patterns is the first step to changing them.</p>
+
+                <h3>Common Criminal Thinking Errors:</h3>
+
+                <div class="thinking-pattern">
+                    <strong>1. Victim Stance</strong>
+                    <p>"Everyone is against me. The system is unfair. I had no choice."</p>
+                    <p><em>Reality Check:</em> While life can be unfair, you are responsible for your choices. Taking ownership is the path to freedom.</p>
+                </div>
+
+                <div class="thinking-pattern">
+                    <strong>2. Entitlement</strong>
+                    <p>"I deserve this. They have it, why shouldn't I? Rules don't apply to me."</p>
+                    <p><em>Reality Check:</em> Nobody owes you anything. Respect for others and their property is foundational to recovery.</p>
+                </div>
+
+                <div class="thinking-pattern">
+                    <strong>3. Power &amp; Control</strong>
+                    <p>"I need to dominate. Weakness is unacceptable. Nobody tells me what to do."</p>
+                    <p><em>Reality Check:</em> True strength is in humility, accepting help, and controlling yourself, not others.</p>
+                </div>
+
+                <div class="thinking-pattern">
+                    <strong>4. Justification &amp; Minimizing</strong>
+                    <p>"It's not that bad. Everyone does it. They deserved it. I needed the money."</p>
+                    <p><em>Reality Check:</em> Making excuses keeps you stuck. Face the truth about your actions and their impact.</p>
+                </div>
+
+                <div class="thinking-pattern">
+                    <strong>5. Inability to Delay Gratification</strong>
+                    <p>"I want it now. I can't wait. Tomorrow doesn't matter."</p>
+                    <p><em>Reality Check:</em> Recovery requires patience. Your brain needs to relearn how to wait for rewards.</p>
+                </div>
+
+                <div class="thinking-pattern">
+                    <strong>6. Failure to Consider Consequences</strong>
+                    <p>"I didn't think about what would happen. I just acted."</p>
+                    <p><em>Reality Check:</em> Every action has consequences. Practice the "pause" before decisions.</p>
+                </div>
+
+                <div class="thinking-pattern">
+                    <strong>7. Lack of Empathy</strong>
+                    <p>"I don't care how they feel. That's their problem, not mine."</p>
+                    <p><em>Reality Check:</em> Empathy connects you to humanity and prevents harm. Your victims were real people.</p>
+                </div>
+
+                <div class="checkpoint">
+                    <h4>Self-Check: Which patterns do you recognize in yourself?</h4>
+                    <p>Honest self-assessment is crucial. Take time to identify which thinking errors you've used to justify addiction or criminal behavior. Write about them in your journal.</p>
+                </div>
+
+                <h3>Cognitive Behavioral Therapy (CBT) Approach</h3>
+                <p>CBT teaches you to identify, challenge, and change distorted thinking:</p>
+
+                <div class="recovery-tool">
+                    <h4>The ABC Model</h4>
+                    <ul>
+                        <li><strong>A</strong> - Activating Event (what happened)</li>
+                        <li><strong>B</strong> - Belief (what you told yourself about it)</li>
+                        <li><strong>C</strong> - Consequence (how you felt and what you did)</li>
+                    </ul>
+                    <p><strong>Example:</strong></p>
+                    <p><strong>A:</strong> Someone disrespected me in the yard<br>
+                    <strong>B:</strong> "I can't let anyone disrespect me. I have to respond with violence."<br>
+                    <strong>C:</strong> I got in a fight and lost privileges.</p>
+                    <p><strong>Challenge the belief:</strong> "Is that really true? What would strength and self-respect actually look like? Walking away takes more courage than violence."</p>
+                </div>
+
+                <h3>Building Pro-Social Thinking</h3>
+                <p>Replace criminal thinking with recovery thinking:</p>
+                <ul>
+                    <li><strong>Accountability:</strong> "I am responsible for my choices and their consequences."</li>
+                    <li><strong>Empathy:</strong> "My actions affect others. I will consider how my choices impact people."</li>
+                    <li><strong>Delayed Gratification:</strong> "I can wait. Long-term goals matter more than instant pleasure."</li>
+                    <li><strong>Problem-Solving:</strong> "I will think through solutions instead of reacting impulsively."</li>
+                    <li><strong>Respect:</strong> "I will treat others as I want to be treated, even when it's hard."</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const lessons = {
+            1: {
+                title: "What Is Addiction?",
+                content: `
+                    <p><strong>Addiction is a brain disease, not a moral failure.</strong></p>
+                    
+                    <p>According to neuroscience research, addiction fundamentally changes how your brain works. It's characterized by:</p>
+                    
+                    <ul>
+                        <li><strong>Compulsive drug seeking</strong> - You pursue the substance despite knowing the consequences</li>
+                        <li><strong>Loss of control</strong> - You can't stop even when you want to</li>
+                        <li><strong>Negative emotional state when not using</strong> - Withdrawal, anxiety, depression</li>
+                    </ul>
+                    
+                    <p><strong>Key Insight:</strong> About 1 in 4 Americans struggles with some form of addiction. You are not alone, and you are not weak. Your brain has been hijacked by substances that exploit natural reward systems.</p>
+                    
+                    <p><strong>The difference between use, abuse, and addiction:</strong></p>
+                    <ul>
+                        <li><strong>Use</strong> - Occasional consumption without major problems</li>
+                        <li><strong>Abuse</strong> - Regular use causing problems in life (relationships, work, legal)</li>
+                        <li><strong>Addiction</strong> - Physical dependence, compulsion, inability to stop despite severe consequences</li>
+                    </ul>
+                    
+                    <p>Understanding this helps remove shame. You didn't choose to be addicted - but you can choose recovery.</p>
+                `
+            },
+            2: {
+                title: "The Pleasure System & Dopamine",
+                content: `
+                    <p><strong>Your brain has a natural reward system that addiction exploits.</strong></p>
+                    
+                    <p>Deep in your brain is a structure called the <strong>nucleus accumbens</strong>, part of the "pleasure center." When you do things necessary for survival (eating, sex, social connection), this area releases <strong>dopamine</strong> - a chemical that makes you feel good.</p>
+                    
+                    <p><strong>Normal dopamine release:</strong></p>
+                    <ul>
+                        <li>Food: 50-100% increase in dopamine</li>
+                        <li>Sex: 100-200% increase</li>
+                        <li>These natural rewards keep you alive and healthy</li>
+                    </ul>
+                    
+                    <p><strong>Drugs hijack this system:</strong></p>
+                    <ul>
+                        <li>Cocaine: 300-400% dopamine increase</li>
+                        <li>Methamphetamine: 1000%+ dopamine increase</li>
+                        <li>Heroin/opioids: 200-300% increase plus pain relief</li>
+                    </ul>
+                    
+                    <p><strong>What this means:</strong> Drugs create an unnaturally intense pleasure response. Your brain starts to believe the drug is more important than food, water, or relationships - because the dopamine signal is so much stronger.</p>
+                    
+                    <p>This is why addicts neglect everything else. Your brain chemistry has been reprogrammed to prioritize the drug above all else.</p>
+                    
+                    <p><strong>The good news:</strong> With sustained abstinence, your dopamine system can heal. Natural pleasures will feel good again - but it takes time (typically 3-12 months).</p>
+                `
+            },
+            3: {
+                title: "How Drugs Hijack Your Brain",
+                content: `
+                    <p><strong>Addiction involves three key brain changes:</strong></p>
+                    
+                    <h4>1. Numbing the Pleasure Center</h4>
+                    <p>Repeated drug use causes your brain to <strong>downregulate dopamine receptors</strong>. This means:</p>
+                    <ul>
+                        <li>You need more of the drug to feel the same high (tolerance)</li>
+                        <li>Normal pleasures (food, music, friendship) feel dull and boring</li>
+                        <li>Nothing feels good anymore except the drug</li>
+                    </ul>
+                    
+                    <h4>2. Sensitizing the Dopamine System</h4>
+                    <p>Your brain becomes <strong>hypersensitive to drug-related cues</strong>:</p>
+                    <ul>
+                        <li>Seeing places where you used triggers intense cravings</li>
+                        <li>Certain people, smells, or music associated with drug use cause automatic dopamine spikes</li>
+                        <li>These cues create powerful urges even after years of sobriety</li>
+                    </ul>
+                    <p>This is why triggers are so dangerous and why avoiding "people, places, and things" matters.</p>
+                    
+                    <h4>3. Inhibiting the Prefrontal Cortex</h4>
+                    <p>The prefrontal cortex (behind your forehead) is your "brake pedal" - it controls:</p>
+                    <ul>
+                        <li>Impulse control and decision-making</li>
+                        <li>Planning for the future</li>
+                        <li>Moral reasoning</li>
+                        <li>Weighing consequences</li>
+                    </ul>
+                    
+                    <p>Addiction <strong>weakens this area</strong>, which explains why:</p>
+                    <ul>
+                        <li>You made impulsive decisions you regret</li>
+                        <li>You committed crimes despite knowing better</li>
+                        <li>You hurt people you love</li>
+                        <li>You couldn't stop even when facing prison</li>
+                    </ul>
+                    
+                    <p><strong>Criminal thinking + weakened prefrontal cortex = dangerous combination.</strong></p>
+                    
+                    <p>Recovery strengthens the prefrontal cortex through:</p>
+                    <ul>
+                        <li>Cognitive behavioral therapy (changing thought patterns)</li>
+                        <li>Mindfulness and meditation</li>
+                        <li>Learning new skills and problem-solving</li>
+                        <li>Making better decisions repeatedly over time</li>
+                    </ul>
+                `
+            },
+            4: {
+                title: "Tolerance & Withdrawal",
+                content: `
+                    <p><strong>Tolerance: Your brain adapts to the drug, requiring more to get high.</strong></p>
+                    
+                    <p>When you repeatedly use drugs, your brain tries to maintain balance (homeostasis) by:</p>
+                    <ul>
+                        <li>Reducing the number of dopamine receptors</li>
+                        <li>Producing less natural dopamine</li>
+                        <li>Becoming less responsive to the drug</li>
+                    </ul>
+                    
+                    <p>Result: You need increasingly larger doses to feel anything. This is extremely dangerous and increases overdose risk, especially after periods of abstinence (like incarceration) when tolerance drops.</p>
+                    
+                    <p><strong>Withdrawal: Your brain rebels when the drug is removed.</strong></p>
+                    
+                    <p>Because your brain adapted to the drug's presence, removing it creates a chemical imbalance causing:</p>
+                    
+                    <ul>
+                        <li><strong>Physical symptoms:</strong> Sweating, shaking, nausea, pain, seizures (alcohol/benzos), flu-like illness (opioids)</li>
+                        <li><strong>Psychological symptoms:</strong> Depression, anxiety, irritability, insomnia, intense cravings</li>
+                        <li><strong>Dysphoria:</strong> Complete inability to feel pleasure (anhedonia)</li>
+                    </ul>
+                    
+                    <p><strong>Withdrawal timeline varies by substance:</strong></p>
+                    <ul>
+                        <li>Alcohol: 6-48 hours onset, peaks 24-72 hours, dangerous</li>
+                        <li>Opioids: 6-12 hours onset, peaks 1-3 days, not life-threatening but extremely uncomfortable</li>
+                        <li>Stimulants (cocaine/meth): Crash within hours, depression lasts weeks to months</li>
+                        <li>Marijuana: Mild but includes irritability, insomnia, reduced appetite</li>
+                    </ul>
+                    
+                    <p><strong>Post-Acute Withdrawal Syndrome (PAWS):</strong></p>
+                    <p>Even after acute withdrawal ends, you may experience for months:</p>
+                    <ul>
+                        <li>Mood swings and irritability</li>
+                        <li>Trouble sleeping</li>
+                        <li>Difficulty concentrating</li>
+                        <li>Low energy and motivation</li>
+                        <li>Anhedonia (can't feel pleasure)</li>
+                    </ul>
+                    
+                    <p>This is when many people relapse because they feel like recovery isn't working. <strong>It is working - your brain is healing, but it takes time.</strong></p>
+                    
+                    <p><strong>Managing withdrawal and PAWS:</strong></p>
+                    <ul>
+                        <li>Medical supervision when needed (especially alcohol/benzos)</li>
+                        <li>Exercise - helps restore dopamine naturally</li>
+                        <li>Healthy diet and sleep hygiene</li>
+                        <li>Peer support and counseling</li>
+                        <li>Patience - brain healing takes 6-12 months minimum</li>
+                    </ul>
+                `
+            },
+            5: {
+                title: "The Prefrontal Cortex & Decision Making",
+                content: `
+                    <p><strong>Your prefrontal cortex is your brain's CEO - and addiction shuts it down.</strong></p>
+                    
+                    <p>Located behind your forehead, this region is responsible for:</p>
+                    <ul>
+                        <li><strong>Executive function:</strong> Planning, organizing, prioritizing</li>
+                        <li><strong>Impulse control:</strong> The ability to stop and think before acting</li>
+                        <li><strong>Delayed gratification:</strong> Choosing long-term rewards over immediate pleasure</li>
+                        <li><strong>Moral reasoning:</strong> Knowing right from wrong and acting accordingly</li>
+                        <li><strong>Emotional regulation:</strong> Managing anger, fear, and stress</li>
+                    </ul>
+                    
+                    <p><strong>How addiction damages this area:</strong></p>
+                    
+                    <p>Studies show that chronic drug use causes:</p>
+                    <ul>
+                        <li>Reduced gray matter in the prefrontal cortex</li>
+                        <li>Decreased blood flow to this region</li>
+                        <li>Weakened connections between prefrontal cortex and reward centers</li>
+                    </ul>
+                    
+                    <p>This creates a vicious cycle:</p>
+                    <ol>
+                        <li>Drugs feel intensely rewarding (dopamine spike)</li>
+                        <li>Your "brake pedal" (prefrontal cortex) is weakened</li>
+                        <li>You can't resist impulses or think through consequences</li>
+                        <li>You use again despite knowing better</li>
+                        <li>The cycle repeats, further damaging the prefrontal cortex</li>
+                    </ol>
+                    
+                    <p><strong>Why this explains criminal behavior:</strong></p>
+                    
+                    <p>A damaged prefrontal cortex combined with addiction means:</p>
+                    <ul>
+                        <li>You can't delay gratification ("I need money NOW for drugs")</li>
+                        <li>Impulse control is gone (stealing, violence without thinking)</li>
+                        <li>Moral reasoning is offline ("I know this is wrong, but I don't care")</li>
+                        <li>You can't weigh consequences properly ("I won't get caught")</li>
+                    </ul>
+                    
+                    <p>Many inmates describe feeling like they were "on autopilot" or "not themselves" during crimes. This is neurologically accurate - your prefrontal cortex wasn't functioning.</p>
+                    
+                    <p><strong>Rebuilding your prefrontal cortex through recovery:</strong></p>
+                    
+                    <div class="recovery-tool">
+                        <h4>Evidence-Based Strategies:</h4>
+                        <ul>
+                            <li><strong>Cognitive Behavioral Therapy (CBT):</strong> Rewires thinking patterns</li>
+                            <li><strong>Mindfulness meditation:</strong> Strengthens attention and impulse control</li>
+                            <li><strong>Learning new skills:</strong> Education, vocational training</li>
+                            <li><strong>Exercise:</strong> Increases blood flow and promotes neuroplasticity</li>
+                            <li><strong>Good sleep:</strong> Essential for brain repair</li>
+                            <li><strong>Practice delayed gratification:</strong> Set small goals and achieve them</li>
+                        </ul>
+                    </div>
+                    
+                    <p>The great news: <strong>Neuroplasticity means your brain CAN heal.</strong> With 6-12 months of sustained recovery, brain scans show significant improvement in prefrontal cortex function.</p>
+                    
+                    <p>You're not broken permanently. You can rebuild your decision-making abilities through consistent effort.</p>
+                `
+            },
+            6: {
+                title: "Breaking the Cycle of Addiction",
+                content: `
+                    <p><strong>Recovery is possible. Your brain can heal. But it requires understanding HOW addiction works and committing to the process.</strong></p>
+                    
+                    <h4>The Three Stages of Recovery:</h4>
+                    
+                    <div class="checkpoint">
+                        <h4>Stage 1: Detox & Acute Withdrawal (Days to Weeks)</h4>
+                        <p><strong>What's happening:</strong> Your brain is rebalancing after drug removal.</p>
+                        <p><strong>Challenges:</strong> Physical discomfort, intense cravings, emotional instability</p>
+                        <p><strong>Keys to success:</strong></p>
+                        <ul>
+                            <li>Medical supervision if needed (alcohol, benzos, severe opioid dependence)</li>
+                            <li>Structured environment (treatment program, jail can provide this)</li>
+                            <li>Basic self-care: sleep, nutrition, hydration</li>
+                            <li>Distraction and support</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="checkpoint">
+                        <h4>Stage 2: Early Recovery (Months 1-6)</h4>
+                        <p><strong>What's happening:</strong> Brain is beginning to heal, but dopamine system still impaired.</p>
+                        <p><strong>Challenges:</strong> Anhedonia (nothing feels good), PAWS, strong triggers, boredom, depression</p>
+                        <p><strong>Keys to success:</strong></p>
+                        <ul>
+                            <li>Address criminal thinking patterns through CBT</li>
+                            <li>Build healthy coping skills for stress and emotions</li>
+                            <li>Avoid people, places, and things associated with use</li>
+                            <li>Establish routine and structure</li>
+                            <li>Connect with peer support (NA, AA, recovery groups)</li>
+                            <li>Start exercising - critical for dopamine restoration</li>
+                            <li>Be patient with yourself - healing takes time</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="checkpoint">
+                        <h4>Stage 3: Sustained Recovery (Months 6+)</h4>
+                        <p><strong>What's happening:</strong> Dopamine receptors are regenerating, prefrontal cortex strengthening.</p>
+                        <p><strong>Challenges:</strong> Complacency, overconfidence, life stress, old triggers unexpectedly appearing</p>
+                        <p><strong>Keys to success:</strong></p>
+                        <ul>
+                            <li>Maintain vigilance - addiction is chronic, not cured</li>
+                            <li>Continue therapy and support groups</li>
+                            <li>Build a meaningful life (work, education, relationships, purpose)</li>
+                            <li>Give back - help others in recovery</li>
+                            <li>Practice gratitude and mindfulness</li>
+                            <li>Have a relapse prevention plan</li>
+                        </ul>
+                    </div>
+                    
+                    <h4>Evidence-Based Treatment Approaches:</h4>
+                    
+                    <p><strong>1. Cognitive Behavioral Therapy (CBT)</strong></p>
+                    <ul>
+                        <li>Identifies and challenges distorted thinking</li>
+                        <li>Addresses both addiction and criminal thinking patterns</li>
+                        <li>Teaches practical coping skills</li>
+                        <li>Most effective evidence-based approach</li>
+                    </ul>
+                    
+                    <p><strong>2. Therapeutic Community (TC)</strong></p>
+                    <ul>
+                        <li>Peer-based recovery in structured environment</li>
+                        <li>Confronts negative behaviors and thinking</li>
+                        <li>Builds pro-social skills and accountability</li>
+                        <li>Common in prison settings (like RDAP, RSAT programs)</li>
+                    </ul>
+                    
+                    <p><strong>3. Medication-Assisted Treatment (MAT)</strong></p>
+                    <ul>
+                        <li>For opioid addiction: Methadone, Buprenorphine (Suboxone), Naltrexone</li>
+                        <li>Reduces cravings and withdrawal</li>
+                        <li>Normalizes brain chemistry</li>
+                        <li>Combined with therapy - not a replacement for it</li>
+                    </ul>
+                    
+                    <p><strong>4. 12-Step Programs (AA, NA, CA)</strong></p>
+                    <ul>
+                        <li>Peer support and accountability</li>
+                        <li>Spiritual framework for recovery</li>
+                        <li>Free and available everywhere, including prisons</li>
+                        <li>Works best when combined with therapy</li>
+                    </ul>
+                    
+                    <h4>What YOU Can Do Right Now:</h4>
+                    
+                    <div class="recovery-tool">
+                        <h4>Recovery Action Plan:</h4>
+                        <ol>
+                            <li><strong>Accept responsibility.</strong> You are accountable for your choices, even while recognizing addiction as a disease.</li>
+                            <li><strong>Commit to abstinence.</strong> No "controlled use" - your brain can't handle it.</li>
+                            <li><strong>Change your thinking.</strong> Use the CBT tools in this app to identify and challenge criminal and addictive thinking.</li>
+                            <li><strong>Build skills.</strong> Develop healthy coping mechanisms for stress, triggers, and emotions.</li>
+                            <li><strong>Find support.</strong> Connect with recovery groups, counselors, and positive influences.</li>
+                            <li><strong>Avoid triggers.</strong> Stay away from people, places, and things connected to drug use.</li>
+                            <li><strong>Take care of your body.</strong> Exercise, sleep, and nutrition directly affect brain healing.</li>
+                            <li><strong>Be patient.</strong> Your brain needs 6-12 months minimum to heal. Don't give up.</li>
+                            <li><strong>Create meaning.</strong> Find purpose beyond avoiding drugs - education, family reconnection, helping others.</li>
+                            <li><strong>Plan for setbacks.</strong> Have a relapse prevention plan and know what to do if cravings intensify.</li>
+                        </ol>
+                    </div>
+                    
+                    <p><strong>Remember:</strong> Addiction hijacked your brain, but recovery can reclaim it. The neuroscience is clear - your brain has the capacity to heal. It requires time, effort, and the right tools.</p>
+                    
+                    <p>You've already taken the first step by engaging with this program. Keep going. Your future self will thank you.</p>
+                `
+            }
+        };
+
+        let completedLessons = new Set();
+        let journalEntries = [];
+        let currentLesson = null;
+
+        function showTab(tabName) {
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function showLesson(lessonNum) {
+            currentLesson = lessonNum;
+            const lesson = lessons[lessonNum];
+            document.getElementById('lessonTitle').textContent = lesson.title;
+            document.getElementById('lessonText').innerHTML = lesson.content;
+            document.getElementById('lessonContent').style.display = 'block';
+            document.getElementById('lessonContent').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function markLessonComplete() {
+            if (currentLesson) {
+                completedLessons.add(currentLesson);
+                updateProgress();
+                alert('Lesson marked as complete! Great progress on your recovery journey.');
+            }
+        }
+
+        function updateProgress() {
+            const totalLessons = Object.keys(lessons).length;
+            const completed = completedLessons.size;
+            const percentage = Math.round((completed / totalLessons) * 100);
+            
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('progressBar').textContent = percentage + '%';
+            
+            if (percentage === 0) {
+                document.getElementById('progressText').textContent = 'Get started by exploring the lessons below';
+            } else if (percentage < 100) {
+                document.getElementById('progressText').textContent = `You've completed ${completed} of ${totalLessons} lessons. Keep going!`;
+            } else {
+                document.getElementById('progressText').textContent = '🎉 Congratulations! You\'ve completed all lessons!';
+            }
+        }
+
+        function submitQuiz() {
+            const q1 = document.querySelector('input[name="q1"]:checked');
+            const q2 = document.querySelector('input[name="q2"]:checked');
+            const q3 = document.querySelector('input[name="q3"]:checked');
+            const q4 = document.querySelector('input[name="q4"]:checked');
+
+            if (!q1 || !q2 || !q3 || !q4) {
+                alert('Please answer all questions before submitting.');
+                return;
+            }
+
+            let resultHTML = '<div class="result success">';
+            resultHTML += '<h3>Your Assessment Results:</h3>';
+            resultHTML += '<p>Thank you for your honest responses. Self-awareness is the foundation of recovery.</p>';
+            
+            resultHTML += '<h4>Key Insights:</h4><ul>';
+            
+            if (q1.value === 'd') {
+                resultHTML += '<li><strong>Denial is a major barrier.</strong> Recognizing you have a problem is the critical first step. Keep learning about addiction science.</li>';
+            } else {
+                resultHTML += '<li>You\'ve recognized your addiction - this awareness is powerful and necessary for change.</li>';
+            }
+            
+            resultHTML += '<li><strong>Your main trigger:</strong> Understanding what triggers cravings helps you avoid or prepare for these situations.</li>';
+            
+            if (q3.value === 'd') {
+                resultHTML += '<li>Addiction has significantly impacted your decision-making across multiple areas. This is evidence of how powerfully drugs affect the prefrontal cortex.</li>';
+            }
+            
+            if (q4.value === 'd') {
+                resultHTML += '<li><strong>Building hope is essential.</strong> As you learn about neuroplasticity and brain healing, hope will grow. Your brain CAN recover.</li>';
+            } else {
+                resultHTML += '<li>You have sources of hope - hold onto these as motivation during difficult times in recovery.</li>';
+            }
+            
+            resultHTML += '</ul>';
+            resultHTML += '<p><strong>Next Steps:</strong> Complete all lessons, use the recovery tools daily, and journal regularly about your journey. Consider sharing your assessment insights with a counselor or support group.</p>';
+            resultHTML += '</div>';
+            
+            document.getElementById('quizResult').innerHTML = resultHTML;
+            document.getElementById('quizResult').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function saveJournalEntry() {
+            const text = document.getElementById('journalText').value.trim();
+            
+            if (!text) {
+                alert('Please write something before saving.');
+                return;
+            }
+
+            const entry = {
+                date: new Date().toLocaleDateString('en-US', { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                }),
+                text: text
+            };
+
+            journalEntries.unshift(entry);
+            document.getElementById('journalText').value = '';
+            displayJournalEntries();
+            alert('Journal entry saved successfully!');
+        }
+
+        function displayJournalEntries() {
+            const container = document.getElementById('savedEntries');
+            
+            if (journalEntries.length === 0) {
+                container.innerHTML = '<h3 style="margin-top: 30px;">Past Reflections</h3><p style="color: var(--color-text-secondary);">Your saved journal entries will appear here.</p>';
+                return;
+            }
+
+            let html = '<h3 style="margin-top: 30px;">Past Reflections</h3>';
+            
+            journalEntries.forEach((entry, index) => {
+                html += `
+                    <div class="entry-item">
+                        <div class="entry-date">${entry.date}</div>
+                        <p>${entry.text}</p>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        updateProgress();
+    </script>
+</body>
+</html>
