@@ -13,6 +13,20 @@ document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', 
     navMenu.classList.remove('active');
 }));
 
+// 3D Interactive Galaxy Effect
+const galaxies = document.querySelectorAll('.galaxy');
+document.addEventListener('mousemove', (e) => {
+    const mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+    const mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+    
+    galaxies.forEach((galaxy, index) => {
+        const depth = (index + 1) * 15;
+        const xMove = mouseX * depth;
+        const yMove = mouseY * depth;
+        galaxy.style.transform = `translate(${xMove}px, ${yMove}px)`;
+    });
+});
+
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {

@@ -6,22 +6,23 @@
 }
 
 :root {
-    --primary-color: #6366f1;
-    --secondary-color: #8b5cf6;
-    --accent-color: #f59e0b;
-    --teal-color: #00bcd4; /* Teal color */
-    --text-primary: #ffffff;
-    --text-secondary: #e5e7eb;
+    --primary-color: #8b9dc3;
+    --secondary-color: #6b7a93;
+    --accent-color: #a0aec0;
+    --teal-color: #7a8fa0; /* Slate color */
+    --mahogany: #8B4513; /* Rich mahogany brown from logo */
+    --text-primary: #f5f5f5;
+    --text-secondary: #d1d5db;
     --text-muted: #9ca3af;
-    --bg-primary: #0f0f23;
-    --bg-secondary: #1a1a2e;
-    --bg-card: rgba(255, 255, 255, 0.05);
-    --border-color: rgba(255, 255, 255, 0.1);
-    --gradient-primary: linear-gradient(135deg, #6366f1, #8b5cf6);
-    --gradient-secondary: linear-gradient(135deg, #f59e0b, #ef4444);
-    --gradient-teal: linear-gradient(135deg, #00bcd4, #00e5ff); /* Teal gradient */
-    --shadow-glow: 0 0 30px rgba(99, 102, 241, 0.3);
-    --shadow-teal-glow: 0 0 30px rgba(0, 188, 212, 0.5); /* Teal glow shadow */
+    --bg-primary: #0d0f12;
+    --bg-secondary: #14171d;
+    --bg-card: rgba(139, 157, 195, 0.08);
+    --border-color: rgba(139, 157, 195, 0.15);
+    --gradient-primary: linear-gradient(135deg, #8b9dc3, #6b7a93);
+    --gradient-secondary: linear-gradient(135deg, #7a8fa0, #5f7285);
+    --gradient-teal: linear-gradient(135deg, #8b9dc3, #a0aec0); /* Marble grey gradient */
+    --shadow-glow: 0 0 30px rgba(139, 157, 195, 0.2);
+    --shadow-teal-glow: 0 0 30px rgba(139, 157, 195, 0.3); /* Marble glow shadow */
 }
 
 html {
@@ -29,14 +30,14 @@ html {
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background: var(--bg-primary);
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
 }
 
-/* Cosmic Background Animation */
+/* 3D Interactive Galaxy Background */
 .stars, .twinkling {
     position: fixed;
     top: 0;
@@ -50,25 +51,64 @@ body {
 }
 
 .stars {
-    background: #000 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="0.5" fill="white" opacity="0.8"/><circle cx="80" cy="40" r="0.3" fill="white" opacity="0.6"/><circle cx="40" cy="60" r="0.4" fill="white" opacity="0.7"/><circle cx="90" cy="80" r="0.2" fill="white" opacity="0.5"/><circle cx="10" cy="90" r="0.6" fill="white" opacity="0.9"/><circle cx="70" cy="10" r="0.3" fill="white" opacity="0.6"/><circle cx="30" cy="30" r="0.4" fill="white" opacity="0.7"/><circle cx="60" cy="70" r="0.2" fill="white" opacity="0.5"/></svg>') repeat;
-    background-size: 200px 200px;
-    animation: move-stars 200s linear infinite;
+    background: 
+        radial-gradient(ellipse 1000px 600px at 20% 30%, rgba(139, 157, 195, 0.15) 0%, transparent 40%),
+        radial-gradient(ellipse 800px 400px at 80% 70%, rgba(139, 157, 195, 0.1) 0%, transparent 35%),
+        radial-gradient(ellipse 600px 300px at 50% 50%, rgba(139, 157, 195, 0.08) 0%, transparent 50%),
+        linear-gradient(180deg, #0a0c0f 0%, #050607 25%, #0d0f12 50%, #14171d 75%, #1a1f29 100%);
+    background-attachment: fixed;
+    overflow: hidden;
+}
+
+.galaxy {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    mix-blend-mode: screen;
+    animation: float-galaxy 8s ease-in-out infinite;
+}
+
+.galaxy-1 {
+    width: 400px;
+    height: 400px;
+    top: 5%;
+    left: 10%;
+    background: radial-gradient(ellipse at 30% 30%, rgba(139, 157, 195, 0.3), rgba(139, 157, 195, 0.1) 50%, transparent 100%);
+    animation-delay: 0s;
+}
+
+.galaxy-2 {
+    width: 500px;
+    height: 500px;
+    top: 60%;
+    right: 5%;
+    background: radial-gradient(ellipse at 40% 40%, rgba(139, 157, 195, 0.25), rgba(139, 157, 195, 0.08) 50%, transparent 100%);
+    animation-delay: 2s;
+}
+
+.galaxy-3 {
+    width: 350px;
+    height: 350px;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse at 35% 35%, rgba(139, 157, 195, 0.2), rgba(139, 157, 195, 0.05) 50%, transparent 100%);
+    animation-delay: 4s;
+}
+
+@keyframes float-galaxy {
+    0%, 100% { transform: translateY(0px) scale(1); opacity: 0.6; }
+    25% { transform: translateY(-20px) scale(1.05); opacity: 0.7; }
+    50% { transform: translateY(-10px) scale(0.95); opacity: 0.5; }
+    75% { transform: translateY(-30px) scale(1.1); opacity: 0.8; }
 }
 
 .twinkling {
-    background: transparent url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="25" cy="25" r="0.3" fill="white" opacity="0.8"><animate attributeName="opacity" values="0.8;0.2;0.8" dur="3s" repeatCount="indefinite"/></circle><circle cx="75" cy="45" r="0.2" fill="white" opacity="0.6"><animate attributeName="opacity" values="0.6;0.1;0.6" dur="2s" repeatCount="indefinite"/></circle><circle cx="45" cy="65" r="0.4" fill="white" opacity="0.7"><animate attributeName="opacity" values="0.7;0.3;0.7" dur="4s" repeatCount="indefinite"/></circle></svg>') repeat;
-    background-size: 300px 300px;
-    animation: move-twinkling 100s linear infinite;
-}
-
-@keyframes move-stars {
-    from { transform: translateY(0px); }
-    to { transform: translateY(-2000px); }
-}
-
-@keyframes move-twinkling {
-    from { transform: translateY(0px); }
-    to { transform: translateY(-1000px); }
+    background: 
+        radial-gradient(ellipse 1200px 800px at 15% 20%, rgba(139, 157, 195, 0.2) 0%, transparent 50%),
+        radial-gradient(ellipse 900px 500px at 85% 80%, rgba(139, 157, 195, 0.12) 0%, transparent 45%);
+    background-attachment: fixed;
+    pointer-events: none;
 }
 
 /* Container */
@@ -83,7 +123,7 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    background: rgba(15, 15, 35, 0.95);
+    background: rgba(13, 15, 18, 0.98);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-color);
     z-index: 1000;
@@ -170,11 +210,13 @@ body {
 }
 
 .hero-title {
-    font-family: 'Orbitron', monospace;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: 4rem;
-    font-weight: 900;
+    font-weight: 700;
     margin-bottom: 1rem;
     line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6), 0 0 15px rgba(139, 157, 195, 0.4);
 }
 
 .gradient-text {
@@ -186,8 +228,8 @@ body {
 }
 
 @keyframes glow {
-    from { filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.5)); }
-    to { filter: drop-shadow(0 0 30px rgba(139, 92, 246, 0.8)); }
+    from { filter: drop-shadow(0 0 20px rgba(139, 157, 195, 0.3)); }
+    to { filter: drop-shadow(0 0 30px rgba(139, 157, 195, 0.5)); }
 }
 
 .hero-subtitle {
@@ -219,20 +261,24 @@ body {
     text-decoration: none;
     font-weight: 600;
     transition: all 0.3s ease;
-    border: 2px solid transparent;
+    border: 2px solid #0a0a0a;
     position: relative;
     overflow: hidden;
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.4);
 }
 
 .btn-primary {
-    background: var(--gradient-teal);
-    color: white;
-    box-shadow: var(--shadow-teal-glow);
+    background: linear-gradient(135deg, #8b9dc3 0%, #8b9dc3 60%, #8B4513 100%);
+    color: #f5f5f5;
+    box-shadow: 0 0 20px rgba(139, 157, 195, 0.5), 0 0 15px rgba(139, 69, 19, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(139, 157, 195, 0.5);
+    position: relative;
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 0 40px rgba(0, 188, 212, 0.8);
+    box-shadow: 0 0 35px rgba(139, 157, 195, 0.7), 0 0 25px rgba(139, 69, 19, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 15px 35px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(135deg, #8b9dc3 0%, #8b9dc3 50%, #A0522D 100%);
 }
 
 .btn-secondary {
@@ -264,8 +310,8 @@ body {
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
-    border: 4px solid var(--primary-color);
-    box-shadow: var(--shadow-glow);
+    border: 3px solid var(--primary-color);
+    box-shadow: 0 0 40px rgba(139, 157, 195, 0.4), 0 0 80px rgba(139, 157, 195, 0.2), inset 0 2px 10px rgba(255, 255, 255, 0.15);
     transition: all 0.3s ease;
 }
 
@@ -275,11 +321,12 @@ body {
     left: -10px;
     right: -10px;
     bottom: -10px;
-    background: var(--gradient-teal);
+    background: radial-gradient(circle, rgba(139, 157, 195, 0.6) 0%, rgba(139, 157, 195, 0.2) 50%, transparent 100%);
     border-radius: 50%;
     z-index: -1;
-    opacity: 0.3;
+    opacity: 0.4;
     animation: pulse 3s ease-in-out infinite;
+    filter: blur(15px);
 }
 
 @keyframes pulse {
@@ -298,7 +345,7 @@ body {
 .scroll-arrow {
     width: 30px;
     height: 30px;
-    border: 2px solid var(--teal-color);
+    border: 2px solid var(--primary-color);
     border-top: none;
     border-left: none;
     transform: rotate(45deg);
@@ -322,14 +369,13 @@ section {
 }
 
 .section-title {
-    font-family: \'Orbitron\', monospace;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    background: var(--gradient-teal);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 10px rgba(139, 157, 195, 0.3);
 }
 
 .section-subtitle {
@@ -371,8 +417,9 @@ section {
     padding: 1rem;
     background: var(--bg-card);
     border-radius: 10px;
-    border: 1px solid var(--border-color);
+    border: 2px solid #1a1a1a;
     transition: all 0.3s ease;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.4);
 }
 
 .highlight-item:hover {
@@ -440,13 +487,14 @@ section {
 
 .app-card {
     background: var(--bg-card);
-    border: 1px solid var(--border-color);
+    border: 2px solid #1a1a1a;
     border-radius: 20px;
     padding: 2rem;
     text-align: center;
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .app-card::before {
@@ -466,22 +514,23 @@ section {
 
 .app-card:hover {
     transform: translateY(-10px);
-    box-shadow: var(--shadow-card);
-    border-color: var(--teal-color);
+    box-shadow: 0 20px 50px rgba(139, 157, 195, 0.35), 0 0 30px rgba(139, 157, 195, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border-color: var(--primary-color);
 }
 
 .app-icon {
     width: 80px;
     height: 80px;
     margin: 0 auto 1.5rem;
-    background: var(--gradient-teal);
-    border-radius: 50%;
+    background: linear-gradient(135deg, #a0aec0 0%, #8b9dc3 50%, #6b7a93 100%);
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 2rem;
-    color: white;
-    box-shadow: var(--shadow-teal-glow);
+    color: #f5f5f5;
+    box-shadow: 0 0 25px rgba(139, 157, 195, 0.4), inset -2px -2px 5px rgba(0, 0, 0, 0.5), inset 1px 1px 3px rgba(255, 255, 255, 0.2);
+    position: relative;
 }
 
 .app-title {
@@ -506,32 +555,34 @@ section {
 }
 
 .feature-tag {
-    background: rgba(0, 188, 212, 0.2);
-    color: var(--teal-color);
+    background: rgba(139, 157, 195, 0.1);
+    color: var(--primary-color);
     padding: 0.3rem 0.8rem;
     border-radius: 20px;
     font-size: 0.8rem;
     font-weight: 500;
-    border: 1px solid rgba(0, 188, 212, 0.3);
+    border: 1px solid rgba(139, 157, 195, 0.25);
 }
 
 .app-link {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: var(--gradient-teal);
-    color: white;
+    background: linear-gradient(135deg, #a0aec0 0%, #8b9dc3 50%, #8B4513 100%);
+    color: #f5f5f5;
     padding: 1rem 2rem;
     border-radius: 50px;
     text-decoration: none;
     font-weight: 600;
     transition: all 0.3s ease;
-    box-shadow: var(--shadow-teal-glow);
+    box-shadow: 0 0 20px rgba(139, 157, 195, 0.5), 0 0 15px rgba(139, 69, 19, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25), inset 0 -2px 5px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(139, 157, 195, 0.5);
 }
 
 .app-link:hover {
     transform: translateY(-2px);
-    box-shadow: 0 0 40px rgba(0, 188, 212, 0.8);
+    background: linear-gradient(135deg, #a0aec0 0%, #8b9dc3 40%, #A0522D 100%);
+    box-shadow: 0 0 35px rgba(139, 157, 195, 0.7), 0 0 25px rgba(139, 69, 19, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.35), inset 0 -2px 8px rgba(0, 0, 0, 0.4), 0 15px 35px rgba(0, 0, 0, 0.5);
 }
 
 .apps-integration-note {
@@ -540,12 +591,13 @@ section {
 
 .integration-card {
     background: var(--bg-card);
-    border: 1px solid var(--border-color);
+    border: 2px solid #1a1a1a;
     border-radius: 15px;
     padding: 2rem;
     text-align: center;
     max-width: 600px;
     margin: 0 auto;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .integration-card h4 {
@@ -572,11 +624,12 @@ section {
 
 .achievement-item {
     background: var(--bg-card);
-    border: 1px solid var(--border-color);
+    border: 2px solid #1a1a1a;
     border-radius: 15px;
     padding: 2rem;
     text-align: center;
     transition: all 0.3s ease;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .achievement-item:hover {
@@ -589,13 +642,14 @@ section {
     width: 60px;
     height: 60px;
     margin: 0 auto 1rem;
-    background: var(--gradient-secondary);
-    border-radius: 50%;
+    background: linear-gradient(135deg, #a0aec0 0%, #8b9dc3 50%, #6b7a93 100%);
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.5rem;
-    color: white;
+    color: #f5f5f5;
+    box-shadow: 0 0 20px rgba(139, 157, 195, 0.4), inset -1px -1px 3px rgba(0, 0, 0, 0.5), inset 1px 1px 2px rgba(255, 255, 255, 0.2);
 }
 
 .achievement-item h3 {
@@ -621,11 +675,12 @@ section {
 
 .sanctuary-card {
     background: var(--bg-card);
-    border: 1px solid var(--border-color);
+    border: 2px solid #1a1a1a;
     border-radius: 20px;
     padding: 3rem;
     text-align: center;
     transition: all 0.3s ease;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .sanctuary-card:hover {
@@ -650,18 +705,21 @@ section {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: var(--gradient-secondary);
-    color: white;
+    background: linear-gradient(135deg, #a0aec0 0%, #8b9dc3 50%, #8B4513 100%);
+    color: #f5f5f5;
     padding: 1rem 2rem;
     border-radius: 50px;
     text-decoration: none;
     font-weight: 600;
     transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(139, 157, 195, 0.5), 0 0 15px rgba(139, 69, 19, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25), inset 0 -2px 5px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(139, 157, 195, 0.5);
 }
 
 .sanctuary-link:hover {
     transform: translateY(-2px);
-    box-shadow: 0 0 30px rgba(245, 158, 11, 0.4);
+    background: linear-gradient(135deg, #a0aec0 0%, #8b9dc3 40%, #A0522D 100%);
+    box-shadow: 0 0 35px rgba(139, 157, 195, 0.7), 0 0 25px rgba(139, 69, 19, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.35), inset 0 -2px 8px rgba(0, 0, 0, 0.4), 0 15px 35px rgba(0, 0, 0, 0.5);
 }
 
 /* Contact Section */
@@ -678,7 +736,7 @@ section {
 
 .social-card {
     background: var(--bg-card);
-    border: 1px solid var(--border-color);
+    border: 2px solid #1a1a1a;
     border-radius: 15px;
     padding: 2rem;
     text-align: center;
@@ -687,10 +745,11 @@ section {
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
-    min-height: 200px; /* Ensure enough space for wrapping text */
+    min-height: 200px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .social-card::before {
@@ -722,13 +781,14 @@ section {
     width: 60px;
     height: 60px;
     margin: 0 auto 1rem;
-    background: var(--gradient-primary);
-    border-radius: 50%;
+    background: linear-gradient(135deg, #a0aec0 0%, #8b9dc3 50%, #6b7a93 100%);
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.5rem;
-    color: white;
+    color: #f5f5f5;
+    box-shadow: 0 0 20px rgba(139, 157, 195, 0.4), inset -1px -1px 3px rgba(0, 0, 0, 0.5), inset 1px 1px 2px rgba(255, 255, 255, 0.2);
 }
 
 .social-card h3 {
@@ -757,7 +817,8 @@ section {
     padding: 2rem;
     background: var(--bg-card);
     border-radius: 15px;
-    border: 1px solid var(--border-color);
+    border: 2px solid #1a1a1a;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .contact-note p {
@@ -824,11 +885,11 @@ section {
         left: -100%;
         top: 70px;
         flex-direction: column;
-        background: rgba(15, 15, 35, 0.98);
+        background: rgba(13, 15, 18, 0.98);
         width: 100%;
         text-align: center;
         transition: 0.3s;
-        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.2);
         padding: 2rem 0;
     }
 
